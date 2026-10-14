@@ -17,18 +17,30 @@ digits.forEach(function(button){
 const operators=document.querySelectorAll(".operator");
 operators.forEach(function(button){
     button.addEventListener("click", function(){
-        //if all three are filled in
+       //if all three arre filled in
     if (firstNumber!=="" && operator!=="" && secondNumber!==""){
-        firstNumber=operate(operator,Number(firstNumber),Number(secondNumber));
+        const result=operate(operator,Number(firstNumber),Number(secondNumber));
+    
+    if(typeof result ==="string"){
+        display.textContent=result;
+        firstNumber="";
+        operator="";
         secondNumber="";
-        display.textContent=firstNumber;
+        return;
     }
+    firstNumber=result;
+    secondNumber="";
+    display.textContent=firstNumber;
+}
         operator=button.textContent;
     });
 });
 const equals=document.getElementById("equals");
 equals.addEventListener("click",function(){
     display.textContent=operate(operator,Number(firstNumber),Number(secondNumber));
+    firstNumber="";
+    operator="";
+    secondNumber="";
 });
 const clear=document.getElementById("clear");
 clear.addEventListener("click",function(){
@@ -47,6 +59,9 @@ function multiply(a,b){
     return a*b;
 }
 function divide(a,b){
+    if(b===0){
+        return "Nice try, son!"
+    }
     return a/b;
 }
 function operate(operator,a,b){
