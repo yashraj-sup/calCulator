@@ -17,6 +17,12 @@ digits.forEach(function(button){
 const operators=document.querySelectorAll(".operator");
 operators.forEach(function(button){
     button.addEventListener("click", function(){
+        //if all three are filled in
+    if (firstNumber!=="" && operator!=="" && secondNumber!==""){
+        firstNumber=operate(operator,Number(firstNumber),Number(secondNumber));
+        secondNumber="";
+        display.textContent=firstNumber;
+    }
         operator=button.textContent;
     });
 });
