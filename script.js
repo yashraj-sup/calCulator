@@ -1,3 +1,4 @@
+"use strict";
 let firstNumber="";
 let operator="";
 let secondNumber="";
@@ -54,6 +55,16 @@ clear.addEventListener("click",function(){
     secondNumber="";
     display.textContent=0;
 })
+const backspace=document.getElementById("backspace");
+backspace.addEventListener("click",function(){
+  if(operator===""){
+    firstNumber=firstNumber.slice(0,-1);
+    display.textContent=firstNumber || "0";
+  }  else{
+    secondNumber=secondNumber.slice(0,-1);
+    display.textContent=secondNumber || "0";
+  };
+});
 function add(a,b){
     return a+b;
 }
