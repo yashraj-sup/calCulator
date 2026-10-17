@@ -37,6 +37,9 @@ operators.forEach(function(button){
 });
 const equals=document.getElementById("equals");
 equals.addEventListener("click",function(){
+    if(firstNumber==="" || operator==="" || secondNumber===""){
+        return;
+    }
     display.textContent=operate(operator,Number(firstNumber),Number(secondNumber));
     firstNumber="";
     operator="";
