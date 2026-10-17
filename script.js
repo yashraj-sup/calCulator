@@ -62,7 +62,7 @@ function divide(a,b){
     if(b===0){
         return "Nice try, son!"
     }
-    return a/b;
+    return Number((a/b).toFixed(4)) ;
 }
 function operate(operator,a,b){
     if (operator=="+"){
