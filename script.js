@@ -89,13 +89,18 @@ function divide(a,b){
     return Number((a/b).toFixed(4)) ;
 }
 function operate(operator,a,b){
+    let result;
     if (operator=="+"){
-        return add(a,b);
+        result= add(a,b);
     }else if (operator=="-"){
-        return subtract(a,b);
+        result= subtract(a,b);
     }else if(operator=="*"){
-        return multiply(a,b);
-    }else{
+        result=multiply(a,b);
+    }else if(operator=="/"){
         return divide(a,b);
     }
+    if(typeof result==="number"){
+        result=Number(result.toFixed(4));
+    }
+    return result;
 }
