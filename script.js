@@ -1,4 +1,4 @@
-"use strict";
+
 let firstNumber="";
 let operator="";
 let secondNumber="";
@@ -6,11 +6,19 @@ const digits=document.querySelectorAll(".digit");
 const display=document.getElementById("display");
 digits.forEach(function(button){
     button.addEventListener("click",function(){
+        let pressed=button.textContent;
+        const current=operator===""?firstNumber:secondNumber;
+        if(pressed==="." && current.includes(".")){
+            return;
+        }
+        if(pressed==="." && current===""){
+            pressed="0.";
+        }
         if (operator===""){ //means if no operator has been choosen yet
-            firstNumber+=button.textContent;
+            firstNumber+=pressed;
             display.textContent=firstNumber;
         }else{
-            secondNumber+=button.textContent; //means if the operator isn't empty anymore
+            secondNumber+=pressed; //means if the operator isn't empty anymore
             display.textContent=secondNumber;
         }
     });
@@ -54,7 +62,7 @@ clear.addEventListener("click",function(){
     operator="";
     secondNumber="";
     display.textContent=0;
-})
+});
 const backspace=document.getElementById("backspace");
 backspace.addEventListener("click",function(){
   if(operator===""){
