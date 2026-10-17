@@ -17,8 +17,10 @@ digits.forEach(function(button){
 const operators=document.querySelectorAll(".operator");
 operators.forEach(function(button){
     button.addEventListener("click", function(){
-       //if all three arre filled in
-    if (firstNumber!=="" && operator!=="" && secondNumber!==""){
+       if(firstNumber===""){
+        return;
+    }
+    if (firstNumber!=="" && operator!=="" && secondNumber!==""){ //if all three arre filled in
         const result=operate(operator,Number(firstNumber),Number(secondNumber));
     
     if(typeof result ==="string"){
