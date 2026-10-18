@@ -33,6 +33,19 @@ document.addEventListener("keydown",function(event){
     if("+-*/".includes(event.key)){
         chooseOperator(event.key);
     }
+    if(event.key==="Enter"){
+        calculate();
+    }
+    if(event.key==="Escape"){
+        clearAll();
+    }
+    if(event.key==="Backspace"){
+        deleteAll();
+    }
+    if(event.key==="Enter" || event.key==="="){
+        event.preventDefault();
+        calculate();
+    }
 });
 function chooseOperator(symbol){
     if(firstNumber===""){
@@ -60,8 +73,7 @@ operators.forEach(function(button){
         chooseOperator(button.textContent);
     });
 });
-const equals=document.getElementById("equals");
-equals.addEventListener("click",function(){
+function calculate(){
     if(firstNumber==="" || operator==="" || secondNumber===""){
         return;
     }
@@ -69,25 +81,28 @@ equals.addEventListener("click",function(){
     firstNumber="";
     operator="";
     secondNumber="";
-});
-const clear=document.getElementById("clear");
-clear.addEventListener("click",function(){
+}
+const equals=document.getElementById("equals");
+equals.addEventListener("click",calculate);
+function clearAll(){
     firstNumber="";
     operator="";
     secondNumber="";
-    display.textContent=0;
-});
+    display.textContent="0";
+}
+const clear=document.getElementById("clear");
+clear.addEventListener("click",clearAll);
+function deleteAll(){
+    if(operator===""){
+        firstNumber=firstNumber.slice(0,-1);
+        display.textContent=firstNumber || "0";
+    }else{
+        secondNumber=secondNumber.slice(0,-1);
+        display.textContent=secondNumber || "0";
+    };
+};
 const backspace=document.getElementById("backspace");
-backspace.addEventListener("click",function(){
-  if(operator===""){
-    firstNumber=firstNumber.slice(0,-1);
-    display.textContent=firstNumber || "0";
-  }  else{
-    secondNumber=secondNumber.slice(0,-1);
-    display.textContent=secondNumber || "0";
-  };
-});
-
+backspace.addEventListener("click",deleteAll);
 function add(a,b){
     return a+b;
 }
