@@ -4,29 +4,38 @@ let operator="";
 let secondNumber="";
 const digits=document.querySelectorAll(".digit");
 const display=document.getElementById("display");
+function inputDigit(value){
+    let pressed=value;
+    const current=operator===""?firstNumber:secondNumber;
+    if(pressed==="." && current.includes(".")){
+        return;
+    }
+    if(pressed==="." && current===""){
+        pressed="0.";
+    }
+    if(operator===""){
+        firstNumber+=pressed;
+        display.textContent=firstNumber;
+    }else{
+        secondNumber+=pressed;
+        display.textContent=secondNumber;
+    }
+}
 digits.forEach(function(button){
     button.addEventListener("click",function(){
-        let pressed=button.textContent;
-        const current=operator===""?firstNumber:secondNumber;
-        if(pressed==="." && current.includes(".")){
-            return;
-        }
-        if(pressed==="." && current===""){
-            pressed="0.";
-        }
-        if (operator===""){ //means if no operator has been choosen yet
-            firstNumber+=pressed;
-            display.textContent=firstNumber;
-        }else{
-            secondNumber+=pressed; //means if the operator isn't empty anymore
-            display.textContent=secondNumber;
-        }
+        inputDigit(button.textContent);
     });
 });
-const operators=document.querySelectorAll(".operator");
-operators.forEach(function(button){
-    button.addEventListener("click", function(){
-       if(firstNumber===""){
+document.addEventListener("keydown",function(event){
+    if("0123456789.".includes(event.key)){
+        inputDigit(event.key);
+    }
+    if("+-*/".includes(event.key)){
+        chooseOperator(event.key);
+    }
+});
+function chooseOperator(symbol){
+    if(firstNumber===""){
         return;
     }
     if (firstNumber!=="" && operator!=="" && secondNumber!==""){ //if all three arre filled in
@@ -42,8 +51,13 @@ operators.forEach(function(button){
     firstNumber=result;
     secondNumber="";
     display.textContent=firstNumber;
-}
-        operator=button.textContent;
+};
+        operator=symbol;
+};
+const operators=document.querySelectorAll(".operator");
+operators.forEach(function(button){
+    button.addEventListener("click", function(){
+        chooseOperator(button.textContent);
     });
 });
 const equals=document.getElementById("equals");
@@ -73,6 +87,7 @@ backspace.addEventListener("click",function(){
     display.textContent=secondNumber || "0";
   };
 });
+
 function add(a,b){
     return a+b;
 }
@@ -97,7 +112,7 @@ function operate(operator,a,b){
     }else if(operator=="*"){
         result=multiply(a,b);
     }else if(operator=="/"){
-        return divide(a,b);
+        result= divide(a,b);
     }
     if(typeof result==="number"){
         result=Number(result.toFixed(4));
